@@ -5,7 +5,7 @@ import Head from 'next/head';
 import { Header } from './Header';
 
 export const Layout = (props: LayoutProps) => (
-  <div>
+  <div className="layout">
     <Head>
       <title>{props.title}</title>
     </Head>

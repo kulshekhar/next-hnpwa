@@ -1,24 +1,47 @@
-export function getPageTitle(pathname: string): string {
+export function getPageDetails(pathname: string): PageDetails {
   const postfix = 'Next.js Firebase Hacker News';
   switch (pathname) {
     case '/':
     case '/top':
     case 'top':
-      return postfix;
+      return {
+        title: postfix,
+        page: 'top'
+      };
     case '/new':
     case 'new':
-      return `New Links | ${postfix}`;
+      return {
+        title: `New Links | ${postfix}`,
+        page: 'new'
+      };
     case '/best':
     case 'best':
-      return `Best Links | ${postfix}`;
+      return {
+        title: `Best Links | ${postfix}`,
+        page: 'best'
+      };
     case '/show':
     case 'show':
-      return `Show | ${postfix}`;
+      return {
+        title: `Show | ${postfix}`,
+        page: 'show'
+      };
     case '/ask':
     case 'ask':
-      return `Ask | ${postfix}`;
+      return {
+        title: `Ask | ${postfix}`,
+        page: 'ask'
+      };
     case '/job':
     case 'job':
-      return `Jobs | ${postfix}`;
+      return {
+        title: `Jobs | ${postfix}`,
+        page: 'job'
+      };
   }
 }
+
+type PageDetails = {
+  title: string;
+  page: string;
+};

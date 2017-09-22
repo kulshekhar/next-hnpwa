@@ -2,7 +2,7 @@ import * as express from 'express';
 import { Server } from 'next';
 import { Item } from './types';
 import { HN } from './db';
-import { getPageTitle } from './helpers';
+import { getPageDetails } from './helpers';
 
 const validListTypes = [
   'top',
@@ -19,13 +19,14 @@ export function routes(params: RouteParams): express.Router {
   HN.initialize();
 
   router.get('/:api(_api)?/:list(top|new|best|ask|show|job)/:page(\\d+)', async (req, res) => {
-    const items = await getList(req.params.list, parseInt(req.params.page));
+    const pageNo = parseInt(req.params.page);
+    const items = await getList(req.params.list, pageNo);
 
     if (req.params.api) {
       res.json(items);
     } else {
-      const pageTitle = getPageTitle(req.params.list);
-      app.render(req, res, `/${req.params.list}`, { items, pageTitle });
+      const pageDetails = getPageDetails(req.params.list);
+      app.render(req, res, `/${req.params.list}`, { items, pageTitle: pageDetails.title, pageName: pageDetails.page, nextPageNo: pageNo + 1, pageNo });
     }
 
   });
@@ -36,8 +37,8 @@ export function routes(params: RouteParams): express.Router {
     if (req.params.api) {
       res.json(items);
     } else {
-      const pageTitle = getPageTitle(req.params.list);
-      app.render(req, res, `/${req.params.list}`, { items, pageTitle });
+      const pageDetails = getPageDetails(req.params.list);
+      app.render(req, res, `/${req.params.list}`, { items, pageTitle: pageDetails.title, pageName: pageDetails.page, nextPageNo: 2 });
     }
   });
 
@@ -54,8 +55,18 @@ export function routes(params: RouteParams): express.Router {
   router.get('/', async (req, res) => {
     const items = await getList('top', 1);
 
-    const pageTitle = getPageTitle('/');
-    app.render(req, res, '/top', { items, pageTitle });
+    const pageDetails = getPageDetails('/');
+    app.render(req, res, '/top', { items, pageTitle: pageDetails.title, pageName: pageDetails.page, nextPageNo: 2 });
+  });
+
+  router.get(':api(_api)?/user/:id', async (req, res) => {
+    const user = await HN.getUser(req.params.id);
+
+    if (req.params.api) {
+      res.json(user);
+    } else {
+      app.render(req, res, '/user', { user });
+    }
   });
 
   async function getList(listType: string, page: number = 1): Promise<Item[]> {

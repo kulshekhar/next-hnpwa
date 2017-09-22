@@ -1,5 +1,6 @@
 import { database, app, apps, initializeApp } from 'firebase';
-import { Item } from './types';
+import { Item, User } from './types';
+import * as moment from 'moment';
 
 export class HN {
   private static domain = 'https://hacker-news.firebaseio.com';
@@ -38,10 +39,27 @@ export class HN {
 
     const items = await Promise.all(promises);
 
-    return items;
+    return items.map((item, i) => {
+      if (item.url) {
+        const parts = item.url.split('/');
+        if (parts.length > 1) {
+          item.domain = parts[2];
+        }
+      }
+      if (item.time) {
+        item.moment = moment.unix(item.time).from(moment(new Date()));
+      }
+      item.index = offset + i + 1;
+      return item;
+    });
   }
 
   static async getItem(id: number): Promise<Item> {
     return null
+  }
+
+  static async getUser(id: string): Promise<User> {
+    const snapshot = await HN.ref.child(`user/${id}`).once('value');
+    return snapshot.val();
   }
 }

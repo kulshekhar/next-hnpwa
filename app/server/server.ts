@@ -26,13 +26,6 @@ const PORT = process.env.PORT || 3000;
     const server = express();
     server.use(compression());
 
-    server.use((req, res, next) => {
-      if (req.host !== 'localhost' && req.get('X-FORWARDED-PROTO') === 'http') {
-        res.redirect(`https://${req.host}${req.url}`);
-        return;
-      }
-    });
-
     server.use('/', routes({ app }));
 
     server.get('/service-worker.js', (req, res) => {
@@ -48,7 +41,7 @@ const PORT = process.env.PORT || 3000;
 
     server.listen(PORT, (err) => {
       if (err) throw err;
-      console.log(`> Ready on port ${PORT}`);
+      console.log(`> Ready on http://localhost:${PORT}`);
     });
   } catch (e) {
     console.error(e);

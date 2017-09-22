@@ -1,5 +1,6 @@
 export type Item = {
   id: number;
+  index: number;
   deleted?: boolean;
   type?: 'job' | 'story' | 'comment' | 'poll' | 'pollopt';
   by?: string;
@@ -14,10 +15,12 @@ export type Item = {
   title?: string;
   parts?: number[];
   descendants?: number;
+  domain?: string;
+  moment?: string;
 };
 
 export type User = {
-  id: number;
+  id: string;
   delay?: number;
   created: number;
   karma: number;
