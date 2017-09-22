@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es2015",
+    "jsx": "react",
+    "inlineSourceMap": true,
+    "inlineSources": true,
+    "typeRoots": [
+      "custom_typings"
+    ]
+  },
+  "exclude": [
+    "next.config.js",
+    "node_modules",
+    "**/node_modules",
+    ".next",
+    "next"
+  ]
+}

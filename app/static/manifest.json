@@ -1,0 +1,51 @@
+{
+  "name": "Next.js HNPWA",
+  "short_name": "Next_HNPWA",
+  "background_color": "#FFFFFF",
+  "theme_color": "#ff6600",
+  "description": "A PWA built using Next.js, Firebase and Hacker News API",
+  "display": "standalone",
+  "start_url": ".",
+  "icons": [
+    {
+      "src": "static/icons/i-36.png",
+      "sizes": "36x36",
+      "type": "image/png"
+    },
+    {
+      "src": "static/icons/i-48.png",
+      "sizes": "48x48",
+      "type": "image/png"
+    },
+    {
+      "src": "static/icons/i-72.png",
+      "sizes": "72x72",
+      "type": "image/png"
+    },
+    {
+      "src": "static/icons/i-96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "static/icons/i-144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "static/icons/i-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "static/icons/i-256.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "static/icons/i-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

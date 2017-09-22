@@ -1,0 +1,8 @@
+.next
+next
+server/**/*.js
+components/**/*.js
+pages/**/*.js
+config/**/*.js
+lib/**/*.js
+helpers/**/*.js
