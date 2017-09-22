@@ -20,6 +20,7 @@
     "firebase-admin": "^5.2.1",
     "firebase-functions": "^0.6.3",
     "isomorphic-unfetch": "^2.0.0",
+    "moment": "^2.18.1",
     "next": "^3.2.2",
     "preact": "^8.2.5",
     "preact-compat": "^3.17.0",
