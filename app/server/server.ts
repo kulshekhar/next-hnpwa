@@ -35,9 +35,13 @@ const PORT = process.env.PORT || 3000;
       res.sendFile(manifestPath);
     });
 
-    server.get('*', (req, res) => handle(req, res));
-
-
+    server.get('*', (req, res) => (req, res) => {
+      if (req.headers['x-forwarded-proto'] != 'https') {
+        res.redirect(`https://${req.hostname}${req.url}`);
+      } else {
+        return handle(req, res);
+      }
+    });
 
     server.listen(PORT, (err) => {
       if (err) throw err;
