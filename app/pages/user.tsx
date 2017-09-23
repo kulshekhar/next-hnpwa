@@ -18,10 +18,10 @@ export default class User extends React.Component<UserProps> {
 
   static async getInitialProps(context: Context): Promise<UserProps> {
     if (context.req) {
-      return context.query;
+      return { user: context.query.user };
     }
 
-    const response = await fetch(`/_api/user/${context.query.user.id}`);
+    const response = await fetch(`/_api/user/${context.query.id}`);
     const user = await response.json();
 
     return {
@@ -32,6 +32,7 @@ export default class User extends React.Component<UserProps> {
 
 type UserProps = {
   user: UserType;
+  id?: number;
 };
 
 type Context = {

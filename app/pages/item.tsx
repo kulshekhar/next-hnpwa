@@ -25,10 +25,10 @@ export default class ItemPage extends React.Component<ItemProps> {
 
   static async getInitialProps(context: Context): Promise<ItemProps> {
     if (context.req) {
-      return context.query;
+      return { item: context.query.item };
     }
 
-    const response = await fetch(`/_api/item/${context.query.item.id}`);
+    const response = await fetch(`/_api/item/${context.query.id}`);
     const item = await response.json();
 
     return {
@@ -40,5 +40,5 @@ export default class ItemPage extends React.Component<ItemProps> {
 type Context = {
   req: any;
   pathname: string;
-  query: ItemProps;
+  query: { item: Item, id: number };
 };
