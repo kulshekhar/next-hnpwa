@@ -53,7 +53,8 @@ export function routes(params: RouteParams): express.Router {
   });
 
   router.get('/', async (req, res) => {
-    const items = await getList('top', 1);
+    // const items = await getList('top', 1);
+    const items = await HN.getFastHomePage();
 
     const pageDetails = getPageDetails('/');
     app.render(req, res, '/top', { items, pageTitle: pageDetails.title, pageName: pageDetails.page, nextPageNo: 2 });

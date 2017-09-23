@@ -2,6 +2,7 @@ import { database, app, apps, initializeApp } from 'firebase';
 import { Item, User } from './types';
 import * as moment from 'moment';
 import * as lru from 'lru-cache';
+import * as f from 'isomorphic-unfetch';
 
 export class HN {
   private static domain = 'https://hacker-news.firebaseio.com';
@@ -92,5 +93,21 @@ export class HN {
   static async getUser(id: string): Promise<User> {
     const snapshot = await HN.ref.child(`user/${id}`).once('value');
     return snapshot.val();
+  }
+
+  static async getFastHomePage(): Promise<Item[]> {
+    try {
+      const result = await f(`https://hnpwa.com/api/v0/news.json`);
+
+      const items = await result.json();
+
+      return items.map((item, i) => {
+        item.index = i + 1;
+        item.moment = item.time_ago;
+        return item;
+      });
+    } catch (e) {
+      return HN.getItems('top');
+    }
   }
 }
