@@ -9,7 +9,8 @@
     "build": "tsc -p tsconfig.prod.json && next build",
     "analyze": "cross-env ANALYZE=1 next build",
     "start": "NODE_ENV=production node server/server.js",
-    "postinstall": "tsc -p tsconfig.prod.json ; next build"
+    "postinstall": "tsc -p tsconfig.prod.json ; next build",
+    "deployfb": "yarn build && firebase deploy"
   },
   "engines": {
     "node": "8.x"
