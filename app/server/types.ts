@@ -10,6 +10,8 @@ export type Item = {
   parent?: number;
   poll?: number;
   kids?: number[];
+  subItems?: Item[];
+  level?: number;
   url?: string;
   score?: number;
   title?: string;
