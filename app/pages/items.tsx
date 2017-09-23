@@ -62,14 +62,19 @@ const ListItem = ({ item }: ItemProps) => (
   <li>
     <div>
       <div className="list-item-index">{item.index}. </div>
-      <a href={`/item/${item.id}`} className="list-item-title">{item.title}</a>
+      <Link as={`/item/${item.id}`} href={`item?id=${item.id}`}><a className="list-item-title">{item.title}</a></Link>
+
       {item.domain ? (<span className="list-item-domain"><a href={item.url}>({item.domain})</a></span>) : ''}
     </div>
     <div className="list-item-meta">
       <span>{item.score} point{item.score == 1 ? '' : 's'}</span>
-      <span> by <a href={`/user/${item.by}`}>{item.by}</a> </span>
-      <span> <a href={`/item/${item.id}`}>{item.moment}</a> </span>
-      <span> | <a href={`/item/${item.id}`}>{item.descendants > 0 ? item.descendants.toString() + ' comment' + (item.descendants === 1 ? '' : 's') : 'discuss'}</a></span>
+
+      <Link as={`/user/${item.by}`} href={`/user?id=${item.by}`}><a> by {item.by}</a></Link>
+
+      <Link as={`/item/${item.id}`} href={`item?id=${item.id}`}><a> {item.moment}</a></Link>
+
+      <Link as={`/item/${item.id}`} href={`item?id=${item.id}`}><a> | {item.descendants > 0 ? item.descendants.toString() + ' comment' + (item.descendants === 1 ? '' : 's') : 'discuss'}</a></Link>
+
     </div>
   </li>
 );
