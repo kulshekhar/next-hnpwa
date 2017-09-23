@@ -24,7 +24,7 @@ const CommentComponent = ({ item }: ItemProps) => (
       item.level > 3 && item.kids
         ? <a href={`/item/${item.id}`} className="continue-thread">Continue reading this thread</a>
         : item.subItems.map(subitem => (
-          <CommentComponent item={subitem} />
+          <CommentComponent key={subitem.id} item={subitem} />
         ))
     }
 
