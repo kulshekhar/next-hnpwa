@@ -43,7 +43,7 @@ export function routes(params: RouteParams): express.Router {
   });
 
   router.get('/:api(_api)?/item/:id(\\d+)', async (req, res) => {
-    const item = await HN.getItem(parseInt(req.params.id));
+    const item = await HN.getExpandedItem(parseInt(req.params.id));
 
     if (req.params.api) {
       res.json(item);

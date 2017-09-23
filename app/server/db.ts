@@ -1,6 +1,7 @@
 import { database, app, apps, initializeApp } from 'firebase';
 import { Item, User } from './types';
 import * as moment from 'moment';
+import * as lru from 'lru-cache';
 
 export class HN {
   private static domain = 'https://hacker-news.firebaseio.com';
@@ -8,6 +9,12 @@ export class HN {
   private static app: app.App;
 
   private static ref: database.Reference;
+
+  private static cache = lru<number, Item>({
+    max: 10000,
+    stale: true,
+    maxAge: 1 * 60 * 60 * 1000,
+  });
 
   static async initialize() {
     if (apps.length === 0) {
@@ -32,30 +39,54 @@ export class HN {
 
     const itemIds: number[] = itemsSnapshot.val().slice(offset, offset + limit);
 
-    const promises: Promise<Item>[] = itemIds.map(async id => {
-      const snapshot = await HN.ref.child(`item/${id}`).once('value');
-      return snapshot.val();
-    });
+    const promises: Promise<Item>[] = (itemIds || []).map(HN.getItem);
 
     const items = await Promise.all(promises);
 
-    return items.map((item, i) => {
-      if (item.url) {
-        const parts = item.url.split('/');
-        if (parts.length > 1) {
-          item.domain = parts[2];
-        }
+    return (items
+      .map((item, i) => HN.processItem(item, i, offset))
+      .filter(item => item !== null)
+    );
+  }
+
+  private static processItem(item: Item, index: number = 0, offset = 0): Item {
+    if (!item) return null;
+
+    if (item.url) {
+      const parts = item.url.split('/');
+      if (parts.length > 1) {
+        item.domain = parts[2];
       }
-      if (item.time) {
-        item.moment = moment.unix(item.time).from(moment(new Date()));
-      }
-      item.index = offset + i + 1;
-      return item;
-    });
+    }
+    if (item.time) {
+      item.moment = moment.unix(item.time).from(moment(new Date()));
+    }
+    item.index = offset + index + 1;
+    return item;
   }
 
   static async getItem(id: number): Promise<Item> {
-    return null
+    if (HN.cache.has(id)) return HN.cache.get(id);
+
+    const itemSnapshot = await HN.ref.child(`item/${id}`).once('value');
+    const item = HN.processItem(itemSnapshot.val());
+    HN.cache.set(id, item);
+
+    return item;
+  }
+
+  static async getExpandedItem(
+    id: number, level: number = 0): Promise<Item> {
+
+    const item = await HN.getItem(id);
+
+    item.level = level;
+
+    item.subItems = await Promise.all(
+      (item.kids || []).map(kidId => HN.getExpandedItem(kidId, level + 1))
+    );
+
+    return item;
   }
 
   static async getUser(id: string): Promise<User> {
