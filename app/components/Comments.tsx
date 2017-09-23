@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Link from 'next/link';
 import { ItemProps } from './types';
 
 export const CommentThreadComponent = ({ item }: ItemProps) => (
@@ -14,15 +15,15 @@ const CommentComponent = ({ item }: ItemProps) => (
     {item.by ? (
       <div className="comment-meta">
         <span style={{ paddingRight: 8 }}>➡</span>
-        <a href={`/user/${item.by}`}>{item.by}</a>
-        <a href={`/item/${item.id}`}> {item.moment}</a>
+        <Link as={`/user/${item.by}`} href={`/user?id=${item.by}`}><a>{item.by}</a></Link>
+        <Link as={`/item/${item.id}`} href={`item?id=${item.id}`}><a> {item.moment}</a></Link>
       </div>
     ) : ''}
     <div className="comment" dangerouslySetInnerHTML={{ __html: item.text }}>
     </div>
     {
       item.level > 3 && item.kids
-        ? <a href={`/item/${item.id}`} className="continue-thread">Continue reading this thread</a>
+        ? <Link as={`/item/${item.id}`} href={`item?id=${item.id}`}><a className="continue-thread">Continue reading this thread</a></Link>
         : item.subItems.map(subitem => (
           <CommentComponent key={subitem.id} item={subitem} />
         ))
