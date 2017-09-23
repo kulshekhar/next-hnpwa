@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Head from 'next/head';
 
 import { Header } from './Header';
+import { ServiceWorker } from './ServiceWorker';
 
 export const Layout = (props: LayoutProps) => (
   <div className="layout">
@@ -15,6 +16,8 @@ export const Layout = (props: LayoutProps) => (
     <main>
       {props.children}
     </main>
+
+    <ServiceWorker />
   </div>
 );
 

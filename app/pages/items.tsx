@@ -25,10 +25,6 @@ export class Items extends React.Component<ItemsProps> {
     );
   }
 
-  componentDidMount() {
-    registerSW();
-  }
-
   static async getInitialProps(context: Context): Promise<ItemsProps> {
     if (context.req) {
       return {
