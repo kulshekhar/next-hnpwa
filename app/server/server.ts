@@ -36,15 +36,16 @@ const PORT = process.env.PORT || 3000;
 
     server.use('/', routes({ app }));
 
-    server.use("/static", express.static(__dirname + "/static", {
+    server.use("/static", express.static(__dirname + "/../static", {
       maxAge: "365d"
     }));
 
     server.get('/service-worker.js', (req, res) => {
-      res.setHeader('Cache-Control', 'no-cache');
+      res.setHeader('Cache-Control', 'max-age=60');
       res.sendFile(swPath);
     });
     server.get('/manifest.json', (req, res) => {
+      res.setHeader('Cache-Control', 'max-age=3600');
       res.sendFile(manifestPath);
     });
 
