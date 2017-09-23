@@ -1,7 +1,6 @@
 import * as React from 'react';
 
 import { Layout } from '../components/Layout';
-import { registerSW } from '../helpers/sw';
 import { ItemHeaderComponent } from '../components/ItemHeader';
 import { Item } from '../server/types';
 import { ItemProps } from '../components/types';

@@ -2,7 +2,6 @@ import * as React from 'react';
 
 import { Layout } from '../components/Layout';
 import { getPageDetails } from '../server/helpers';
-import { registerSW } from '../helpers/sw';
 import { Item } from '../server/types';
 import { ItemProps } from '../components/types';
 

@@ -1,7 +1,6 @@
 import * as React from 'react';
 
 import { Layout } from '../components/Layout';
-import { registerSW } from '../helpers/sw';
 import { User as UserType } from '../server/types';
 
 export default class User extends React.Component<UserProps> {
