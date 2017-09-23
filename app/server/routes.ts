@@ -22,6 +22,8 @@ export function routes(params: RouteParams): express.Router {
     const pageNo = parseInt(req.params.pageNo);
     const items = await getList(req.params.list, pageNo);
 
+    res.setHeader('Cache-Control', 'max-age=60');
+
     if (req.params.api) {
       res.json(items);
     } else {
@@ -34,6 +36,8 @@ export function routes(params: RouteParams): express.Router {
   router.get('/:api(_api)?/:list(top|new|best|ask|show|job)', async (req, res) => {
     const items = await getList(req.params.list);
 
+    res.setHeader('Cache-Control', 'max-age=60');
+
     if (req.params.api) {
       res.json(items);
     } else {
@@ -45,6 +49,8 @@ export function routes(params: RouteParams): express.Router {
   router.get('/:api(_api)?/item/:id(\\d+)', async (req, res) => {
     const item = await HN.getExpandedItem(parseInt(req.params.id));
 
+    res.setHeader('Cache-Control', 'max-age=60');
+
     if (req.params.api) {
       res.json(item);
     } else {
@@ -55,12 +61,16 @@ export function routes(params: RouteParams): express.Router {
   router.get('/', async (req, res) => {
     const items = await getList('top', 1);
 
+    res.setHeader('Cache-Control', 'max-age=60');
+
     const pageDetails = getPageDetails('/');
     app.render(req, res, '/top', { items, pageTitle: pageDetails.title, pageName: pageDetails.page, nextPageNo: 2 });
   });
 
   router.get('/:api(_api)?/user/:id', async (req, res) => {
     const user = await HN.getUser(req.params.id);
+
+    res.setHeader('Cache-Control', 'max-age=60');
 
     if (req.params.api) {
       res.json(user);

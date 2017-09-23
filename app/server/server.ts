@@ -37,6 +37,7 @@ const PORT = process.env.PORT || 3000;
     server.use('/', routes({ app }));
 
     server.get('/service-worker.js', (req, res) => {
+      res.setHeader('Cache-Control', 'no-cache');
       res.sendFile(swPath);
     });
     server.get('/manifest.json', (req, res) => {
