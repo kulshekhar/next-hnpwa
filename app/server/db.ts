@@ -33,6 +33,11 @@ export class HN {
   static async getItems(pathname: string, page: number = 1): Promise<Item[]> {
     const limit = 30;
     const offset = (page - 1) * limit;
+    const cacheKey = `${pathname}${offset}`;
+
+    if (HN.cache.has(cacheKey)) {
+      return HN.cache.get(cacheKey) as Item[];
+    }
 
     const itemsSnapshot = await HN.ref.child(`${pathname}stories`)
       .limitToFirst(limit * page)
@@ -44,10 +49,14 @@ export class HN {
 
     const items = await Promise.all(promises);
 
-    return (items
+    const processedItems = (items
       .map((item, i) => HN.processItem(item, i, offset))
       .filter(item => item !== null)
     );
+
+    HN.cache.set(cacheKey, processedItems);
+
+    return processedItems;
   }
 
   private static processItem(item: Item, index: number = 0, offset = 0): Item {
