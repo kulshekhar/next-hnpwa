@@ -55,7 +55,7 @@ export default class extends Document {
 
               ol.item-list li {
                 margin-left: -1em;
-                color: #777;
+                color: #60554f;
                 font-size: 14px;
               }
 
@@ -75,7 +75,7 @@ export default class extends Document {
               }
 
               .list-item-meta a, .list-item-domain a {
-                color: #777;
+                color: #60554f;
                 text-decoration: none;
               }
 
@@ -109,7 +109,7 @@ export default class extends Document {
 
               .profile {
                 padding: 1.5em;
-                color: #777;
+                color: #60554f;
                 font-size: 14px;
               }
             `}
