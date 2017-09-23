@@ -11,7 +11,7 @@ export class HN {
 
   private static ref: database.Reference;
 
-  private static cache = lru<number, Item>({
+  private static cache = lru<number | string, Item | Item[]>({
     max: 10000,
     stale: true,
     maxAge: 1 * 60 * 60 * 1000,
@@ -67,7 +67,7 @@ export class HN {
   }
 
   static async getItem(id: number): Promise<Item> {
-    if (HN.cache.has(id)) return HN.cache.get(id);
+    if (HN.cache.has(id)) return HN.cache.get(id) as Item;
 
     const itemSnapshot = await HN.ref.child(`item/${id}`).once('value');
     const item = HN.processItem(itemSnapshot.val());
@@ -97,15 +97,24 @@ export class HN {
 
   static async getFastHomePage(): Promise<Item[]> {
     try {
+      if (HN.cache.has('__homepage')) {
+        return HN.cache.get('__homepage') as Item[];
+      }
+
       const result = await f(`https://hnpwa.com/api/v0/news.json`);
 
       const items = await result.json();
 
-      return items.map((item, i) => {
+      const homeItems = items.map((item, i) => {
         item.index = i + 1;
         item.moment = item.time_ago;
         return item;
       });
+
+      HN.cache.set('__homepage', homeItems);
+
+      return homeItems;
+
     } catch (e) {
       return HN.getItems('top');
     }

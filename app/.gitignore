@@ -6,3 +6,4 @@ pages/**/*.js
 config/**/*.js
 lib/**/*.js
 helpers/**/*.js
+index.js
