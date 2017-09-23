@@ -59,7 +59,7 @@ export function routes(params: RouteParams): express.Router {
     app.render(req, res, '/top', { items, pageTitle: pageDetails.title, pageName: pageDetails.page, nextPageNo: 2 });
   });
 
-  router.get(':api(_api)?/user/:id', async (req, res) => {
+  router.get('/:api(_api)?/user/:id', async (req, res) => {
     const user = await HN.getUser(req.params.id);
 
     if (req.params.api) {
