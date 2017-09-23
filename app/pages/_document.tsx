@@ -44,7 +44,8 @@ export default class extends Document {
 
               @media (min-width: 751px) {
                 .layout {
-                  width: 750px;
+                  min-width: 750px;
+                  width: 80%;
                   margin: 0 auto;
                 }
               }
@@ -65,8 +66,10 @@ export default class extends Document {
                 height: 2em;
               }
 
-              .list-item-title {
+              a.list-item-title, a.item-title {
                 color: #222;
+                text-decoration: none;
+                font-size: 14px;
               }
 
               .list-item-domain, .list-item-meta {
@@ -79,16 +82,13 @@ export default class extends Document {
                 text-decoration: none;
               }
 
-              .list-item-meta a:hover, .list-item-domain a:hover {
+              .list-item-meta a:hover, .list-item-domain a:hover, .item-meta a:hover, .comment-meta a:hover {
                 text-decoration: underline;
               }
 
               .list-item-meta {
+                color: #60554f;
                 margin: 5px 0 5px 1.5em;
-              }
-
-              a.list-item-title {
-                text-decoration: none;
               }
 
               a.prev, a.next {
@@ -112,6 +112,77 @@ export default class extends Document {
                 color: #60554f;
                 font-size: 14px;
               }
+
+              .item-page {
+                margin: 1.5em;
+              }
+
+              .item-title {
+                font-size: 12px;
+              }
+
+              .item-title-text {
+                margin-top: 0.5em;
+                color: #222;
+                font-size: 12px;
+              }
+
+              .comment-container {
+                font-size: 12px;
+                color: #222;
+              }
+
+              .comment-meta {
+                margin-top: 1em;                
+              }
+
+              .comment-meta a {
+                color: #60554f;
+                text-decoration: none;
+                font-size: 11px;
+              }
+
+              .comment {
+                margin-top: 0.5em;
+              }
+
+              .comment a {
+                color: #222;
+              }
+
+              div[class^="cc-"] {
+                margin-left: 12em;
+              }
+
+              .cc-0 {
+                margin-left: 0em;
+              }
+
+              .cc-1 {
+                margin-left: 2em;
+              }
+
+              .cc-2 {
+                margin-left: 4em;
+              }
+
+              .cc-3 {
+                margin-left: 6em;
+              }
+
+              .cc-4 {
+                margin-left: 8em;
+              }
+
+              .cc-5 {
+                margin-left: 10em;
+              }
+
+              .continue-thread {
+                color: brown;
+                font-style: italic;
+              }
+
             `}
           </style>
         </Head>
