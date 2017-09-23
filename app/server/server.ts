@@ -27,7 +27,7 @@ const PORT = process.env.PORT || 3000;
     server.use(compression());
 
     server.get('*', (req, res, next) => {
-      if (req.headers['x-forwarded-proto'] != 'https') {
+      if (req.hostname !== 'localhost' && req.headers['x-forwarded-proto'] != 'https') {
         res.redirect(`https://${req.hostname}${req.url}`);
       } else {
         return next();
