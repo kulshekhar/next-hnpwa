@@ -10,19 +10,19 @@ export const Nav = () => (
     <Link href='/'>
       <a style={linkStyle}>home</a>
     </Link>
-    <Link prefetch href='/new'>
+    <Link href='/new'>
       <a style={linkStyle}>new</a>
     </Link>
-    <Link prefetch href='/best'>
+    <Link href='/best'>
       <a style={linkStyle}>best</a>
     </Link>
-    <Link prefetch href='/show'>
+    <Link href='/show'>
       <a style={linkStyle}>show</a>
     </Link>
-    <Link prefetch href='/ask'>
+    <Link href='/ask'>
       <a style={linkStyle}>ask</a>
     </Link>
-    <Link prefetch href='/job'>
+    <Link href='/job'>
       <a style={linkStyle}>jobs</a>
     </Link>
   </nav>
