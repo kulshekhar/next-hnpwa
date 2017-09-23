@@ -45,14 +45,5 @@
     "concurrently": "^3.5.0",
     "cross-env": "^5.0.5",
     "ts-loader": "^2.3.7"
-  },
-  "cloud-repo-tools": {
-    "test": {
-      "app": {
-        "msg": "Hello, Next HNPWA!"
-      }
-    },
-    "requiresKeyFile": true,
-    "requiresProjectId": true
   }
 }

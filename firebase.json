@@ -1,0 +1,77 @@
+{
+  "hosting": {
+    "public": "public",
+    "rewrites": [
+      {
+        "source": "/service-worker.js",
+        "destination": "/static/service-worker.js"
+      },
+      {
+        "source": "/manifest.json",
+        "destination": "/static/manifest.json"
+      },
+      {
+        "source": "/@(top|best|new|ask|show|job|item)",
+        "function": "fbapp"
+      },
+      {
+        "source": "/@(top|best|new|ask|show|job|item|user)/*",
+        "function": "fbapp"
+      },
+      {
+        "source": "/",
+        "function": "fbapp"
+      },
+      {
+        "source": "/@(_next|_api)/**/*",
+        "function": "fbapp"
+      }
+    ],
+    "headers": [
+      {
+        "source": "/service-worker.js",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache"
+          }
+        ]
+      },
+      {
+        "source": "/@(top|best|new|ask|show|job|item)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "max-age=60"
+          }
+        ]
+      },
+      {
+        "source": "/@(top|best|new|ask|show|job|item)/*",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "max-age=60"
+          }
+        ]
+      },
+      {
+        "source": "/static/icons/*.png",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "max-age=31536000"
+          }
+        ]
+      }
+    ],
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  },
+  "functions": {
+    "source": "app"
+  }
+}
