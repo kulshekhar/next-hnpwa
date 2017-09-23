@@ -3,7 +3,7 @@
   "short_name": "Next_HNPWA",
   "background_color": "#FFFFFF",
   "theme_color": "#ff6600",
-  "description": "A PWA built using Next.js, Firebase and Hacker News API",
+  "description": "A PWA built using Next.js and Hacker News API",
   "display": "standalone",
   "start_url": ".",
   "icons": [

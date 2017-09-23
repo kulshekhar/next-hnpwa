@@ -1,5 +1,5 @@
 export function getPageDetails(pathname: string): PageDetails {
-  const postfix = 'Next.js Firebase Hacker News';
+  const postfix = 'Next.js Hacker News';
   switch (pathname) {
     case '/':
     case '/top':

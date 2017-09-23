@@ -5,7 +5,6 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const { ANALYZE } = process.env
 
 module.exports = {
-  // distDir: process.env.FOR_FB ? '../fb/functions/next' : 'next',
   distDir: 'next',
   webpack: (/** @type{Configuration} */config, { dev }) => {
     if (ANALYZE) {
