@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Link from 'next/link';
 
 import { Layout } from '../components/Layout';
 import { getPageDetails } from '../server/helpers';
@@ -16,10 +17,10 @@ export class Items extends React.Component<ItemsProps> {
         </ol>
         <div className="pagination">
           {this.props.pageNo > 1
-            ? (<a href={`/${this.props.pageName}/${this.props.pageNo - 1}`} className="prev">prev</a>)
+            ? (<Link href={`/${this.props.pageName}/${this.props.pageNo - 1}`}><a className="prev">prev</a></Link>)
             : ''}
 
-          <a href={`/${this.props.pageName}/${this.props.nextPageNo}`} className="next">next</a>
+          <Link href={`/${this.props.pageName}?pageNo=${this.props.nextPageNo}`} as={`/${this.props.pageName}/${this.props.nextPageNo}`}><a className="next">next</a></Link>
         </div>
       </Layout>
     );
@@ -37,9 +38,12 @@ export class Items extends React.Component<ItemsProps> {
     }
 
     const pathname = context.pathname === '/' ? '/top' : context.pathname;
-    const page = context.query && context.query.pageNo ? context.query.pageNo : 1;
 
-    const response = await fetch(`/_api${pathname}/${page}`);
+    const pageNo = context.query && context.query.pageNo
+      ? typeof context.query.pageNo == 'string' ? parseInt(context.query.pageNo) : context.query.pageNo
+      : 1;
+
+    const response = await fetch(`/_api${pathname}/${pageNo}`);
     const items = await response.json();
 
     const pageDetails = getPageDetails(pathname);
@@ -47,8 +51,8 @@ export class Items extends React.Component<ItemsProps> {
     return {
       pageTitle: pageDetails.title,
       pageName: pageDetails.page,
-      nextPageNo: page + 1,
-      pageNo: page,
+      nextPageNo: pageNo + 1,
+      pageNo: pageNo,
       items
     };
   }

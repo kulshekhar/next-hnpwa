@@ -18,8 +18,8 @@ export function routes(params: RouteParams): express.Router {
   const { app } = params;
   HN.initialize();
 
-  router.get('/:api(_api)?/:list(top|new|best|ask|show|job)/:page(\\d+)', async (req, res) => {
-    const pageNo = parseInt(req.params.page);
+  router.get('/:api(_api)?/:list(top|new|best|ask|show|job)/:pageNo(\\d+)', async (req, res) => {
+    const pageNo = parseInt(req.params.pageNo);
     const items = await getList(req.params.list, pageNo);
 
     if (req.params.api) {
