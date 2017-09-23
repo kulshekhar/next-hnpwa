@@ -30,14 +30,13 @@ export class HN {
 
   }
 
-  static async getItems(pathname: string, page: number = 1): Promise<Item[]> {
-    const limit = 30;
-    const offset = (page - 1) * limit;
+  private static async fetchItems(
+    pathname: string,
+    page: number,
+    offset: number,
+    limit: number,
+  ): Promise<Item[]> {
     const cacheKey = `${pathname}${offset}`;
-
-    if (HN.cache.has(cacheKey)) {
-      return HN.cache.get(cacheKey) as Item[];
-    }
 
     const itemsSnapshot = await HN.ref.child(`${pathname}stories`)
       .limitToFirst(limit * page)
@@ -57,6 +56,19 @@ export class HN {
     HN.cache.set(cacheKey, processedItems);
 
     return processedItems;
+  }
+
+  static async getItems(pathname: string, page: number = 1): Promise<Item[]> {
+    const limit = 30;
+    const offset = (page - 1) * limit;
+    const cacheKey = `${pathname}${offset}`;
+
+    if (HN.cache.has(cacheKey)) {
+      HN.fetchItems(pathname, page, offset, limit);
+      return HN.cache.get(cacheKey) as Item[];
+    }
+
+    return HN.fetchItems(pathname, page, offset, limit);
   }
 
   private static processItem(item: Item, index: number = 0, offset = 0): Item {
