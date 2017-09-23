@@ -41,11 +41,11 @@ const PORT = process.env.PORT || 3000;
     }));
 
     server.get('/service-worker.js', (req, res) => {
-      res.setHeader('Cache-Control', 'max-age=60');
+      res.setHeader('Cache-Control', 'no-cache');
       res.sendFile(swPath);
     });
     server.get('/manifest.json', (req, res) => {
-      res.setHeader('Cache-Control', 'max-age=3600');
+      res.setHeader('Cache-Control', 'no-cache');
       res.sendFile(manifestPath);
     });
 
