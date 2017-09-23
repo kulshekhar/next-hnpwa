@@ -1,9 +1,10 @@
 import * as React from 'react';
 
 import { Layout } from '../components/Layout';
-import { Item as ItemType } from '../server/types';
 import { getPageDetails } from '../server/helpers';
 import { registerSW } from '../helpers/sw';
+import { Item } from '../server/types';
+import { ItemProps } from '../components/types';
 
 export class Items extends React.Component<ItemsProps> {
   render() {
@@ -11,7 +12,7 @@ export class Items extends React.Component<ItemsProps> {
       <Layout title={this.props.pageTitle}>
         <ol className="item-list">
           {this.props.items.map(item => (
-            <Item key={item.id} item={item}></Item>
+            <ListItem key={item.id} item={item} />
           ))}
         </ol>
         <div className="pagination">
@@ -54,7 +55,7 @@ export class Items extends React.Component<ItemsProps> {
   }
 }
 
-const Item = ({ item }: ItemProps) => (
+const ListItem = ({ item }: ItemProps) => (
   <li>
     <div>
       <div className="list-item-index">{item.index}. </div>
@@ -75,11 +76,7 @@ type ItemsProps = {
   pageName: string;
   nextPageNo: number;
   pageNo?: number;
-  items: ItemType[];
-};
-
-type ItemProps = {
-  item: ItemType;
+  items: Item[];
 };
 
 type Context = {
