@@ -5,9 +5,7 @@
     "jsx": "react",
     "inlineSourceMap": true,
     "inlineSources": true,
-    "typeRoots": [
-      "custom_typings"
-    ]
+    "noUnusedLocals": true
   },
   "exclude": [
     "next.config.js",
