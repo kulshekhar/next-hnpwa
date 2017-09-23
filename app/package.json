@@ -8,7 +8,7 @@
     "prod": "tsc -p tsconfig.prod.json && next build && NODE_ENV=production node server/server.js",
     "build": "tsc -p tsconfig.prod.json && next build",
     "analyze": "cross-env ANALYZE=1 next build",
-    "start": "next build && NODE_ENV=production node server/server.js",
+    "start": "NODE_ENV=production node server/server.js",
     "postinstall": "tsc -p tsconfig.prod.json ; next build"
   },
   "engines": {

@@ -36,8 +36,15 @@ const PORT = process.env.PORT || 3000;
     });
 
     server.get('*', (req, res) => (req, res) => {
+      console.log('>>>1', req.headers);
+      console.log('>>>2', req.header);
+      console.log('>>>3', req.get('x-forwarded-proto'));
+      console.log('>>>4', req.headers['x-forwarded-proto']);
+      console.log('>>>5', req.hostname);
+      console.log('>>>6', req.host);
+
       if (req.headers['x-forwarded-proto'] != 'https') {
-        res.redirect(`https://${req.hostname}${req.url}`);
+        res.redirect(`https://${req.host}${req.url}`);
       } else {
         return handle(req, res);
       }
