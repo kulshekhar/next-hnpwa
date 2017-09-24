@@ -16,8 +16,9 @@ https://next-fb-hnpwa.firebaseapp.com/
 
 ![WebPageTest.org Results](performance/fb-webpagetest.png)
 
-Complete results (emerging markets): https://www.webpagetest.org/result/170924_BQ_08b80e1854f5bfa0c5b36d10a5373b1e/
-Complete results (faster 3G): https://www.webpagetest.org/result/170924_SG_e20c408039688ecdcc07205ff6a91299/
+[Complete results (emerging markets)](https://www.webpagetest.org/result/170924_BQ_08b80e1854f5bfa0c5b36d10a5373b1e/)
+
+[Complete results (faster 3G)](https://www.webpagetest.org/result/170924_SG_e20c408039688ecdcc07205ff6a91299/)
 
 ## Hosted on Heroku
 
@@ -35,4 +36,4 @@ The timings that resulted in an `F` for the 'First Byte Time' are as shown below
 
 ![WebPageTest.org Results](performance/heroku-webpagetest2.png)
 
-Complete results: https://www.webpagetest.org/result/170923_TJ_70e85a49a2ab814ff7134a8019384b20/
+[Complete results (emerging markets)](https://www.webpagetest.org/result/170923_TJ_70e85a49a2ab814ff7134a8019384b20/)
