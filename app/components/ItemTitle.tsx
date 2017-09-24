@@ -8,13 +8,16 @@ export const ItemTitleComponent = ({ item }: ItemProps) => (
     {
       item.title
         ? (
-          item.url
-            ? <a href={item.url} className="item-title">{item.title}</a>
-            :
-            <div>
-              <Link as={`/item/${item.id}`} href={`/item?id=${item.id}`}><a className="item-title">{item.title}</a></Link>
-              {item.domain ? (<span className="list-item-domain"><a href={item.url}>({item.domain})</a></span>) : ''}
-            </div>
+          <div>
+            {item.url
+              ? <a href={item.url} className="item-title">{item.title}</a>
+              :
+              <div>
+                <Link as={`/item/${item.id}`} href={`/item?id=${item.id}`}><a className="item-title">{item.title}</a></Link>
+              </div>
+            }
+            {item.domain ? (<span className="list-item-domain"><a href={item.url}>({item.domain})</a></span>) : ''}
+          </div>
         )
         : ''
     }
@@ -31,7 +34,7 @@ export const ItemTitleComponent = ({ item }: ItemProps) => (
 
           ? <Link as={`/item/${item.parent}`} href={`/item?id=${item.parent}`}><a> | parent</a></Link>
 
-          : <Link as={`/item/${item.id}`} href={`item?id=${item.id}`}><a> |{item.descendants > 0 ? item.descendants.toString() + ' comment' + (item.descendants === 1 ? '' : 's') : 'discuss'}</a></Link>
+          : <Link as={`/item/${item.id}`} href={`item?id=${item.id}`}><a> | {item.descendants > 0 ? item.descendants.toString() + ' comment' + (item.descendants === 1 ? '' : 's') : 'discuss'}</a></Link>
       }
     </div>
   </div>
