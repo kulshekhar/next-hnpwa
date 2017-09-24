@@ -27,14 +27,14 @@ export const ItemTitleComponent = ({ item }: ItemProps) => (
 
       <Link as={`/user/${item.by}`} href={`/user?id=${item.by}`}><a>{item.by}</a></Link>
 
-      <Link as={`/item/${item.id}`} href={`item?id=${item.id}`}><a> {item.moment}</a></Link>
+      <Link as={`/item/${item.id}`} href={`/item?id=${item.id}`}><a> {item.moment}</a></Link>
 
       {
         item.parent
 
           ? <Link as={`/item/${item.parent}`} href={`/item?id=${item.parent}`}><a> | parent</a></Link>
 
-          : <Link as={`/item/${item.id}`} href={`item?id=${item.id}`}><a> | {item.descendants > 0 ? item.descendants.toString() + ' comment' + (item.descendants === 1 ? '' : 's') : 'discuss'}</a></Link>
+          : <Link as={`/item/${item.id}`} href={`/item?id=${item.id}`}><a> | {item.descendants > 0 ? item.descendants.toString() + ' comment' + (item.descendants === 1 ? '' : 's') : 'discuss'}</a></Link>
       }
     </div>
   </div>
