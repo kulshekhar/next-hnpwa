@@ -41,10 +41,20 @@ export const AppStyle = () => (
         font-size: 14px;
       }
 
+      .list-item-row {
+        margin-top: 0.5em;
+        display: flex;
+        align-items: flex-start;
+      }
+
       .list-item-index {
-        float: left;
-        padding-right: 5px;
-        height: 2em;
+        flex: 0 0 30px;
+        font-size: 20px;
+        text-align: right;
+      }
+
+      .list-item-spacer {
+        flex: 0 0 20px;
       }
 
       a.list-item-title, a.item-title {
@@ -53,7 +63,7 @@ export const AppStyle = () => (
         font-size: 14px;
       }
 
-      .list-item-domain, .list-item-meta {
+      .list-item-domain {
         margin-left: 0.5em;
         font-size: 12px;
       }
@@ -69,7 +79,8 @@ export const AppStyle = () => (
 
       .list-item-meta {
         color: #60554f;
-        margin: 5px 0 5px 1.5em;
+        font-size: 12px;
+        margin: 5px 0;
       }
 
       a.prev, a.next {
@@ -129,6 +140,7 @@ export const AppStyle = () => (
 
       .comment a {
         color: #222;
+        word-wrap: break-word;
       }
 
       div[class^="cc-"] {

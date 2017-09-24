@@ -59,22 +59,25 @@ export class Items extends React.Component<ItemsProps> {
 }
 
 const ListItem = ({ item }: ItemProps) => (
-  <li>
+  <li className="list-item-row">
+    <div className="list-item-index">{item.index}. </div>
+    <div className="list-item-spacer"></div>
     <div>
-      <div className="list-item-index">{item.index}. </div>
-      <Link as={`/item/${item.id}`} href={`item?id=${item.id}`}><a className="list-item-title">{item.title}</a></Link>
+      <div>
+        <Link as={`/item/${item.id}`} href={`item?id=${item.id}`}><a className="list-item-title">{item.title}</a></Link>
 
-      {item.domain ? (<span className="list-item-domain"><a href={item.url}>({item.domain})</a></span>) : ''}
-    </div>
-    <div className="list-item-meta">
-      <span>{item.score} point{item.score == 1 ? '' : 's'}</span>
+        {item.domain ? (<span className="list-item-domain"><a href={item.url}>({item.domain})</a></span>) : ''}
+      </div>
+      <div className="list-item-meta">
+        <span>{item.score} point{item.score == 1 ? '' : 's'}</span>
 
-      <Link as={`/user/${item.by}`} href={`/user?id=${item.by}`}><a> by {item.by}</a></Link>
+        <Link as={`/user/${item.by}`} href={`/user?id=${item.by}`}><a> by {item.by}</a></Link>
 
-      <Link as={`/item/${item.id}`} href={`item?id=${item.id}`}><a> {item.moment}</a></Link>
+        <Link as={`/item/${item.id}`} href={`item?id=${item.id}`}><a> {item.moment}</a></Link>
 
-      <Link as={`/item/${item.id}`} href={`item?id=${item.id}`}><a> | {item.descendants > 0 ? item.descendants.toString() + ' comment' + (item.descendants === 1 ? '' : 's') : 'discuss'}</a></Link>
+        <Link as={`/item/${item.id}`} href={`item?id=${item.id}`}><a> | {item.descendants > 0 ? item.descendants.toString() + ' comment' + (item.descendants === 1 ? '' : 's') : 'discuss'}</a></Link>
 
+      </div>
     </div>
   </li>
 );

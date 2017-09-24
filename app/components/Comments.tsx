@@ -14,7 +14,7 @@ const CommentComponent = ({ item }: ItemProps) => (
   <div className={`cc-${item.level - 1}`}>
     {item.by ? (
       <div className="comment-meta">
-        <span style={{ paddingRight: 8 }}>➡</span>
+        <span style={{ paddingRight: 8 }}>●</span>
         <Link as={`/user/${item.by}`} href={`/user?id=${item.by}`}><a>{item.by}</a></Link>
         <Link as={`/item/${item.id}`} href={`/item?id=${item.id}`}><a> {item.moment}</a></Link>
       </div>
