@@ -33,10 +33,10 @@ export const AppStyle = () => (
 
       ol.item-list {
         list-style-type: none;
+        padding: 0 1em;
       }
 
       ol.item-list li {
-        margin-left: -1em;
         color: #60554f;
         font-size: 14px;
       }
@@ -54,7 +54,7 @@ export const AppStyle = () => (
       }
 
       .list-item-spacer {
-        flex: 0 0 20px;
+        flex: 0 0 10px;
       }
 
       a.list-item-title, a.item-title {
@@ -140,7 +140,11 @@ export const AppStyle = () => (
 
       .comment a {
         color: #222;
+      }
+
+      .comment a, .comment pre {
         word-wrap: break-word;
+        white-space: pre-wrap;
       }
 
       div[class^="cc-"] {
