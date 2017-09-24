@@ -1,8 +1,7 @@
 import { database, app, apps, initializeApp } from 'firebase';
-import { Item, User } from './types';
+import { Item, User, ListWrapper } from './types';
 import * as moment from 'moment';
 import * as lru from 'lru-cache';
-import * as f from 'isomorphic-unfetch';
 
 export class HN {
   private static domain = 'https://hacker-news.firebaseio.com';
@@ -11,7 +10,7 @@ export class HN {
 
   private static ref: database.Reference;
 
-  private static cache = lru<number | string, Item | Item[]>({
+  private static cache = lru<number | string, Item | ListWrapper>({
     max: 10000,
     stale: true,
     maxAge: 1 * 60 * 60 * 1000,
@@ -35,37 +34,42 @@ export class HN {
     page: number,
     offset: number,
     limit: number,
-  ): Promise<Item[]> {
+  ): Promise<ListWrapper> {
     const cacheKey = `${pathname}${offset}`;
 
     const itemsSnapshot = await HN.ref.child(`${pathname}stories`)
-      .limitToFirst(limit * page)
       .once('value');
 
-    const itemIds: number[] = itemsSnapshot.val().slice(offset, offset + limit);
+    const rawIds = itemsSnapshot.val();
+    const itemCount: number = rawIds && rawIds.length ? rawIds.length : 0;
+    const pageCount = Math.ceil(itemCount / limit);
+
+    const itemIds: number[] = rawIds.slice(offset, offset + limit);
 
     const promises: Promise<Item>[] = (itemIds || []).map(HN.getItem);
 
-    const items = await Promise.all(promises);
+    const rawItems = await Promise.all(promises);
 
-    const processedItems = (items
+    const items = (rawItems
       .map((item, i) => HN.processItem(item, i, offset))
       .filter(item => item !== null)
     );
 
-    HN.cache.set(cacheKey, processedItems);
+    const listWrapper = { items, itemCount, pageCount };
 
-    return processedItems;
+    HN.cache.set(cacheKey, listWrapper);
+
+    return listWrapper;
   }
 
-  static async getItems(pathname: string, page: number = 1): Promise<Item[]> {
+  static async getItems(pathname: string, page: number = 1): Promise<ListWrapper> {
     const limit = 30;
     const offset = (page - 1) * limit;
     const cacheKey = `${pathname}${offset}`;
 
     if (HN.cache.has(cacheKey)) {
       HN.fetchItems(pathname, page, offset, limit);
-      return HN.cache.get(cacheKey) as Item[];
+      return HN.cache.get(cacheKey) as ListWrapper;
     }
 
     return HN.fetchItems(pathname, page, offset, limit);
@@ -114,30 +118,5 @@ export class HN {
   static async getUser(id: string): Promise<User> {
     const snapshot = await HN.ref.child(`user/${id}`).once('value');
     return snapshot.val();
-  }
-
-  static async getFastHomePage(): Promise<Item[]> {
-    try {
-      if (HN.cache.has('__homepage')) {
-        return HN.cache.get('__homepage') as Item[];
-      }
-
-      const result = await f(`https://hnpwa.com/api/v0/news.json`);
-
-      const items = await result.json();
-
-      const homeItems = items.map((item, i) => {
-        item.index = i + 1;
-        item.moment = item.time_ago;
-        return item;
-      });
-
-      HN.cache.set('__homepage', homeItems);
-
-      return homeItems;
-
-    } catch (e) {
-      return HN.getItems('top');
-    }
   }
 }

@@ -3,7 +3,8 @@ import Link from 'next/link';
 
 import { Layout } from '../components/Layout';
 import { getPageDetails } from '../server/helpers';
-import { Item } from '../server/types';
+import { Item, ListWrapper } from '../server/types';
+import { PaginationComponent } from '../components/Pagination';
 import { ItemProps } from '../components/types';
 
 export class Items extends React.Component<ItemsProps> {
@@ -15,25 +16,22 @@ export class Items extends React.Component<ItemsProps> {
             <ListItem key={item.id} item={item} />
           ))}
         </ol>
-        <div className="pagination">
-          {this.props.pageNo > 1
-            ? (<Link href={`/${this.props.pageName}?pageNo=${this.props.pageNo - 1}`} as={`/${this.props.pageName}/${this.props.pageNo - 1}`}><a className="prev">prev</a></Link>)
-            : ''}
-
-          <Link href={`/${this.props.pageName}?pageNo=${this.props.nextPageNo}`} as={`/${this.props.pageName}/${this.props.nextPageNo}`}><a className="next">next</a></Link>
-        </div>
+        <PaginationComponent pageName={this.props.pageName} pageNo={this.props.pageNo} pageCount={this.props.pageCount} />
       </Layout>
     );
   }
 
   static async getInitialProps(context: Context): Promise<ItemsProps> {
     if (context.req) {
+      console.log('>>>', context.req.query);
+
       return {
         pageTitle: context.query.pageTitle,
         items: context.query.items,
         pageName: context.query.pageName,
         nextPageNo: context.query.nextPageNo,
         pageNo: context.query.pageNo,
+        pageCount: context.query.pageCount,
       };
     }
 
@@ -44,7 +42,7 @@ export class Items extends React.Component<ItemsProps> {
       : 1;
 
     const response = await fetch(`/_api${pathname}/${pageNo}`);
-    const items = await response.json();
+    const wrapper: ListWrapper = await response.json();
 
     const pageDetails = getPageDetails(pathname);
 
@@ -53,7 +51,8 @@ export class Items extends React.Component<ItemsProps> {
       pageName: pageDetails.page,
       nextPageNo: pageNo + 1,
       pageNo: pageNo,
-      items
+      items: wrapper.items,
+      pageCount: wrapper.pageCount,
     };
   }
 }
@@ -88,6 +87,7 @@ type ItemsProps = {
   nextPageNo: number;
   pageNo?: number;
   items: Item[];
+  pageCount: number;
 };
 
 type Context = {

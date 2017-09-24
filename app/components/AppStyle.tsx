@@ -87,20 +87,33 @@ export const AppStyle = () => (
         margin: 5px 0;
       }
 
-      a.prev, a.next {
-        color: #222;
-        text-decoration: none;
-        margin-bottom: 1em;
+      .pagination {
+        display: flex;
+        justify-content: space-between;
+        padding: 1em;
+        border-top: 1px dotted black;
       }
 
-      a.prev {
-        float: left;
-        margin-left: 1.5em;
+      .pagination a, .pagination span.page {
+        flex: 1;
+      }
+
+      .pagination span {
+        text-align: center;
+      }
+
+      .pagination span.disabled {
+        color: #999;
       }
 
       a.next {
-        float: right;
-        margin-right: 1.5em;
+        text-align: right;
+      }
+
+      .pagination a {
+        color: #222;
+        text-decoration: none;
+        margin-bottom: 1em;
       }
 
       .profile {

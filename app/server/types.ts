@@ -29,3 +29,9 @@ export type User = {
   about?: string;
   submitted?: number[];
 };
+
+export type ListWrapper = {
+  items: Item[];
+  itemCount: number;
+  pageCount: number;
+}

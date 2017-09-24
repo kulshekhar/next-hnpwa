@@ -1,6 +1,6 @@
 import * as express from 'express';
 import { Server } from 'next';
-import { Item } from './types';
+import { ListWrapper } from './types';
 import { HN } from './db';
 import { getPageDetails } from './helpers';
 
@@ -20,29 +20,29 @@ export function routes(params: RouteParams): express.Router {
 
   router.get('/:api(_api)?/:list(top|new|best|ask|show|job)/:pageNo(\\d+)', async (req, res) => {
     const pageNo = parseInt(req.params.pageNo);
-    const items = await getList(req.params.list, pageNo);
+    const wrapper = await getList(req.params.list, pageNo);
 
     res.setHeader('Cache-Control', 'public, max-age=60');
 
     if (req.params.api) {
-      res.json(items);
+      res.json(wrapper);
     } else {
       const pageDetails = getPageDetails(req.params.list);
-      app.render(req, res, `/${req.params.list}`, { items, pageTitle: pageDetails.title, pageName: pageDetails.page, nextPageNo: pageNo + 1, pageNo });
+      app.render(req, res, `/${req.params.list}`, { ...wrapper, pageTitle: pageDetails.title, pageName: pageDetails.page, nextPageNo: pageNo + 1, pageNo });
     }
 
   });
 
   router.get('/:api(_api)?/:list(top|new|best|ask|show|job)', async (req, res) => {
-    const items = await getList(req.params.list);
+    const wrapper = await getList(req.params.list);
 
     res.setHeader('Cache-Control', 'public, max-age=60');
 
     if (req.params.api) {
-      res.json(items);
+      res.json(wrapper);
     } else {
       const pageDetails = getPageDetails(req.params.list);
-      app.render(req, res, `/${req.params.list}`, { items, pageTitle: pageDetails.title, pageName: pageDetails.page, nextPageNo: 2 });
+      app.render(req, res, `/${req.params.list}`, { ...wrapper, pageTitle: pageDetails.title, pageName: pageDetails.page, nextPageNo: 2 });
     }
   });
 
@@ -59,12 +59,12 @@ export function routes(params: RouteParams): express.Router {
   });
 
   router.get('/', async (req, res) => {
-    const items = await getList('top', 1);
+    const wrapper = await getList('top', 1);
 
     res.setHeader('Cache-Control', 'public, max-age=60');
 
     const pageDetails = getPageDetails('/');
-    app.render(req, res, '/top', { items, pageTitle: pageDetails.title, pageName: pageDetails.page, nextPageNo: 2 });
+    app.render(req, res, '/top', { ...wrapper, pageTitle: pageDetails.title, pageName: pageDetails.page, nextPageNo: 2 });
   });
 
   router.get('/:api(_api)?/user/:id', async (req, res) => {
@@ -79,7 +79,7 @@ export function routes(params: RouteParams): express.Router {
     }
   });
 
-  async function getList(listType: string, page: number = 1): Promise<Item[]> {
+  async function getList(listType: string, page: number = 1): Promise<ListWrapper> {
     if (validListTypes.indexOf(listType) >= 0) {
       try {
         return HN.getItems(listType, page);
@@ -88,7 +88,7 @@ export function routes(params: RouteParams): express.Router {
       }
     }
 
-    return [];
+    return { items: [], itemCount: 0, pageCount: 0 };
   }
 
   return router;
