@@ -30,7 +30,7 @@ export class Items extends React.Component<ItemsProps> {
         items: context.query.items,
         pageName: context.query.pageName,
         nextPageNo: context.query.nextPageNo,
-        pageNo: context.query.pageNo,
+        pageNo: context.query.pageNo || 1,
         pageCount: context.query.pageCount,
       };
     }
