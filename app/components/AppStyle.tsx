@@ -103,7 +103,7 @@ export const AppStyle = () => (
       }
 
       .pagination span.disabled {
-        color: #999;
+        display: none;
       }
 
       a.next {

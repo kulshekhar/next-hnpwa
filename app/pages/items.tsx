@@ -23,7 +23,6 @@ export class Items extends React.Component<ItemsProps> {
 
   static async getInitialProps(context: Context): Promise<ItemsProps> {
     if (context.req) {
-      console.log('>>>', context.req.query);
 
       return {
         pageTitle: context.query.pageTitle,
