@@ -1,5 +1,8 @@
 # A PWA made using Next.js and the Hacker News API 
 
+- Single page app
+- Works just as well with JavaScript disabled
+- Code split and bundled to minimize the payload on the first visit (automatically done by Next.js)
 
 ## Served Using Firebase Functions and Static Hosting
 
