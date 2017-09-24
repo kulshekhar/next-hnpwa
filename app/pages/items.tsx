@@ -17,7 +17,7 @@ export class Items extends React.Component<ItemsProps> {
         </ol>
         <div className="pagination">
           {this.props.pageNo > 1
-            ? (<Link href={`/${this.props.pageName}/${this.props.pageNo - 1}`}><a className="prev">prev</a></Link>)
+            ? (<Link href={`/${this.props.pageName}?pageNo=${this.props.pageNo - 1}`} as={`/${this.props.pageName}/${this.props.pageNo - 1}`}><a className="prev">prev</a></Link>)
             : ''}
 
           <Link href={`/${this.props.pageName}?pageNo=${this.props.nextPageNo}`} as={`/${this.props.pageName}/${this.props.nextPageNo}`}><a className="next">next</a></Link>
