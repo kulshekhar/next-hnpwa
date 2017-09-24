@@ -4,13 +4,13 @@ import Head from 'next/head';
 import { Header } from './Header';
 import { ServiceWorker } from './ServiceWorker';
 
-export const Layout = (props: LayoutProps) => (
+export const Layout = (props: LayoutProps = {}) => (
   <div className="layout">
     <Head>
       <title>{props.title}</title>
     </Head>
 
-    <Header></Header>
+    <Header page={props.page}></Header>
 
     <main>
       {props.children}
@@ -21,6 +21,7 @@ export const Layout = (props: LayoutProps) => (
 );
 
 type LayoutProps = {
-  title: string;
-  children: any;
+  page?: string;
+  title?: string;
+  children?: any;
 }

@@ -9,7 +9,7 @@ import { ItemProps } from '../components/types';
 export class Items extends React.Component<ItemsProps> {
   render() {
     return (
-      <Layout title={this.props.pageTitle}>
+      <Layout title={this.props.pageTitle} page={this.props.pageName}>
         <ol className="item-list">
           {this.props.items.map(item => (
             <ListItem key={item.id} item={item} />

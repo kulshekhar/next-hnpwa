@@ -5,25 +5,25 @@ const linkStyle = {
   marginRight: 15
 };
 
-export const Nav = () => (
+export const Nav = ({ page }: { page: string }) => (
   <nav>
     <Link href='/'>
-      <a style={linkStyle}>home</a>
+      <a style={linkStyle} className={page == 'top' ? 'menu-active' : ''}>home</a>
     </Link>
     <Link href='/new'>
-      <a style={linkStyle}>new</a>
+      <a style={linkStyle} className={page == 'new' ? 'menu-active' : ''}>new</a>
     </Link>
     <Link href='/best'>
-      <a style={linkStyle}>best</a>
+      <a style={linkStyle} className={page == 'best' ? 'menu-active' : ''}>best</a>
     </Link>
     <Link href='/show'>
-      <a style={linkStyle}>show</a>
+      <a style={linkStyle} className={page == 'show' ? 'menu-active' : ''}>show</a>
     </Link>
     <Link href='/ask'>
-      <a style={linkStyle}>ask</a>
+      <a style={linkStyle} className={page == 'ask' ? 'menu-active' : ''}>ask</a>
     </Link>
     <Link href='/job'>
-      <a style={linkStyle}>jobs</a>
+      <a style={linkStyle} className={page == 'job' ? 'menu-active' : ''}>jobs</a>
     </Link>
   </nav>
 );

@@ -31,6 +31,10 @@ export const AppStyle = () => (
         }
       }
 
+      .menu-active {
+        font-weight: bold;
+      }
+
       ol.item-list {
         list-style-type: none;
         padding: 0 1em;

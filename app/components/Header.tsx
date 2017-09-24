@@ -2,8 +2,8 @@ import * as React from 'react';
 
 import { Nav } from './Nav';
 
-export const Header = () => (
+export const Header = ({ page }: { page: string }) => (
   <header>
-    <Nav></Nav>
+    <Nav page={page}></Nav>
   </header>
 );
