@@ -30,10 +30,9 @@ https://next-hnpwa.herokuapp.com
 
 ### WebPageTest.org Results:
 
-![WebPageTest.org Results](performance/heroku-webpagetest1.png)
+![WebPageTest.org Results](performance/heroku-webpagetest.png)
 
-The timings that resulted in an `F` for the 'First Byte Time' are as shown below:
+[Complete results (emerging markets)](https://www.webpagetest.org/result/170924_CJ_b5db1a0d191bece560a58ffbda9825b1/)
 
-![WebPageTest.org Results](performance/heroku-webpagetest2.png)
-
-[Complete results (emerging markets)](https://www.webpagetest.org/result/170923_TJ_70e85a49a2ab814ff7134a8019384b20/)
+[Complete results (faster 3G)](https://www.webpagetest.org/result/170924_PA_0aa76053c65c17808ac893f05a9c7800/)
+ 
