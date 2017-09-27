@@ -5,8 +5,8 @@
   "private": true,
   "scripts": {
     "dev": "concurrently \"tsc -w\" \"node server/server.js\"",
-    "prod": "tsc -p tsconfig.prod.json && next build && NODE_ENV=production node server/server.js",
-    "build": "tsc -p tsconfig.prod.json && next build",
+    "prod": "tsc -p tsconfig.prod.json ; next build ; NODE_ENV=production node server/server.js",
+    "build": "tsc -p tsconfig.prod.json ; next build",
     "analyze": "cross-env ANALYZE=1 next build",
     "start": "NODE_ENV=production node server/server.js",
     "postinstall": "tsc -p tsconfig.prod.json ; next build",
